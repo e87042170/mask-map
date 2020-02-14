@@ -16,12 +16,13 @@ def download():
                 # print(line[0])
                 wr.writerow(line)
 def gitPush():
-    print("Dowloaded at:",str(datetime.now()))
+    now=str(datetime.now())
     os.system('git init')
     os.system('git add maskdata.csv')
-    os.system('git commit -m \"test auto commit '+str(datetime.now())+'\"')
+    os.system('git commit -m \"test auto commit '+now+'\"')
     os.system('git remote add origin git@github.com:e87042170/mask-map.git')
     os.system('git push origin master')
+    print("Dowloaded at:",now)
 
 import os
 import time
