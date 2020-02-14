@@ -47,7 +47,7 @@ function initMap() {
                   addMarker(i,pos);
                 }
             }
-            var markerCluster = new MarkerClusterer(map, markers,{imagePath:'https://googlemaps.github.io/v3-utility-library/packages/markerclustererplus/images/m'});
+            // var markerCluster = new MarkerClusterer(map, markers,{imagePath:'https://googlemaps.github.io/v3-utility-library/packages/markerclustererplus/images/m'});
           }
         }); 
       }
