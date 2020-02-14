@@ -34,7 +34,7 @@ function initMap() {
       dataType: "text",
       success: function(csv) {
         pharmacy=JSON.parse(csvJSON(csv))
-        $('#update').html("最後更新時間："+pharmacy[0]['來源資料時間\r'])
+        $('#update').html("最後更新時間："+pharmacy[0]['來源資料時間'])
         $.ajax({
           type: "GET",
           url: "data.csv",
