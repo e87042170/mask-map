@@ -55,12 +55,19 @@ function initMap() {
   }
   function addMarker(e,pos) {
     var x=pharmacy[e]["成人口罩剩餘數"];
-    var icon='http://maps.google.com/mapfiles/kml/paddle/red-circle.png';
+    
+    var icon_url='http://maps.google.com/mapfiles/kml/paddle/red-circle.png';
     if(x>50){
-      icon='http://maps.google.com/mapfiles/kml/paddle/grn-circle.png';
+      icon_url='http://maps.google.com/mapfiles/kml/paddle/grn-circle.png';
     }else if(x>20){
-      icon='http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png';
+      icon_url='http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png';
     }
+    var icon = {
+        url: icon_url, // url
+        scaledSize: new google.maps.Size(50, 50), // scaled size
+        origin: new google.maps.Point(0,0), // origin
+        anchor: new google.maps.Point(0, 0) // anchor
+    };
     markers[e] = new google.maps.Marker({
       position: {
         lat: pos.lat,
