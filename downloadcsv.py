@@ -15,9 +15,19 @@ def download():
             for line in my_list:
                 # print(line[0])
                 wr.writerow(line)
+def gitPush():
+    print("Dowloaded at:",str(datetime.now()))
+    os.system('git init')
+    os.system('git add maskdata.csv')
+    os.system('git commit -m \"test auto commit '+str(datetime.now())+'\"')
+    os.system('git remote add origin git@github.com:e87042170/mask-map.git')
+    os.system('git push origin master')
+
+import os
 import time
 from datetime import datetime
 while True:
     download()
-    print("Dowloaded at:",str(datetime.now()))
+    gitPush()
+    # print("Dowloaded at:",str(datetime.now()))
     time.sleep(10*60)
