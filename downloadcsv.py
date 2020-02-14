@@ -19,7 +19,7 @@ def gitPush():
     now=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     os.system('git init')
     os.system('git add maskdata.csv')
-    os.system('git commit -m \"test auto commit '+now+'\"')
+    os.system('git commit -m \"auto update @'+now+'\"')
     os.system('git remote add origin git@github.com:e87042170/mask-map.git')
     os.system('git push origin master')
     print("Dowloaded at:",now)
