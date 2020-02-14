@@ -16,7 +16,7 @@ def download():
                 # print(line[0])
                 wr.writerow(line)
 def gitPush():
-    now=str(datetime.now())
+    now=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     os.system('git init')
     os.system('git add maskdata.csv')
     os.system('git commit -m \"test auto commit '+now+'\"')
