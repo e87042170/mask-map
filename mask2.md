@@ -9,6 +9,7 @@ title: mask2
 
 首先，先到 Google 官網的說明裡面複製基本的範例。
 
+```html
 <!DOCTYPE html>
 <html>
   <head>
@@ -44,6 +45,7 @@ title: mask2
     async defer></script>
   </body>
 </html>
+```
 
 然後把 YOUR_API_KEY 改成你剛剛申請的 API KEY，應該就可以顯示滿版的 Google Map 了。
 
