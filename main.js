@@ -69,8 +69,8 @@ function initMap() {
     var icon = {
         url: icon_url, // url
         scaledSize: new google.maps.Size(64, 64), // scaled size
-        origin: new google.maps.Point(0,0), // origin
-        anchor: new google.maps.Point(0, 0) // anchor
+        // origin: new google.maps.Point(0,0), // origin
+        // anchor: new google.maps.Point(0, 0) // anchor
     };
     markers[e] = new google.maps.Marker({
       position: {
