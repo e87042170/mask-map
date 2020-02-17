@@ -1,3 +1,8 @@
+---
+layout: default
+title: mask2
+---
+
 # 口罩地圖實作 - 使用 Google Maps JavaScript API
 
 有了 API KEY 之後，我們就可以開始使用 Google Maps JavaScript API 了。
