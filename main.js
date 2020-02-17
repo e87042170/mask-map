@@ -68,7 +68,7 @@ function initMap() {
     }
     var icon = {
         url: icon_url, // url
-        scaledSize: new google.maps.Size(50, 50), // scaled size
+        scaledSize: new google.maps.Size(64, 64), // scaled size
         origin: new google.maps.Point(0,0), // origin
         anchor: new google.maps.Point(0, 0) // anchor
     };
