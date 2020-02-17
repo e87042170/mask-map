@@ -7,7 +7,7 @@ title: mask1
 
 最近剛好在FB上看到社群發起的口罩地圖前端開發挑戰，覺得蠻有趣的而且也沒做過，就想說來挑戰看看順便學習一下新的東西。
 
-說到地圖第一個想到的就是 google map，但是要怎麼做還真不曉得，google 了一下，google map 有 API 可以使用，看了一下使用說明，要使用 Google Maps JavaScript API 呢，要先有 API KEY，所以第一步就是要先申請 API KEY。
+說到地圖第一個想到的就是 google map，但是要怎麼做還真不曉得，google 了一下，google map 有 API 可以使用，看了一下使用說明，要使用 *Google Maps JavaScript API* 呢，要先有 API KEY，所以第一步就是要先申請 API KEY。
 
 # 使用限制
 
