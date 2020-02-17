@@ -66,19 +66,19 @@ function initMap() {
     }else if(x>20){
       icon_url='http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png';
     }
-    // var icon = {
-    //     url: icon_url, // url
-    //     scaledSize: new google.maps.Size(64, 64), // scaled size
-    //     // origin: new google.maps.Point(0,0), // origin
-    //     // anchor: new google.maps.Point(0, 0) // anchor
-    // };
+    var icon = {
+        url: icon_url, // url
+        scaledSize: new google.maps.Size(50, 50), // scaled size
+        // origin: new google.maps.Point(0,0), // origin
+        // anchor: new google.maps.Point(0, 0) // anchor
+    };
     markers[e] = new google.maps.Marker({
       position: {
         lat: pos.lat,
         lng: pos.lng
       },
       map: map,
-      icon:icon_url
+      icon:icon
     //   label: position[e].label
     });
     var msg='<h1>'+pharmacy[e]["醫事機構名稱"]+'</h1>'
