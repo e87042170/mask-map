@@ -49,7 +49,7 @@ title: mask2
 
 然後把 *YOUR_API_KEY* 改成你剛剛申請的 API KEY，應該就可以顯示滿版的 Google Map 了。
 
-如果你的地圖顯示成灰色，且有 *"For development purposes only"* 的字樣，那就是你的專案沒有連結的帳單帳戶，你需要建立一個帳單帳戶，又或者是你連 API KEY 都不給(如果是要練習的話就不用給)；如果你的地圖顯示 *"糟糕！出了點狀況。"*，那就是你的 API KEY 沒改，或者是限制金鑰的設定問題。
+如果你的地圖顯示成灰色，且有 *"For development purposes only"* 的字樣，那就是你的專案沒有連結的帳單帳戶，你需要建立一個帳單帳戶，又或者是你連 API KEY 都不給(如果是要練習的話就不用給,把`key=YOUR_API_KEY&`拿掉)；如果你的地圖顯示 *"糟糕！出了點狀況。"*，那就是你的 API KEY 沒改，或者是限制金鑰的設定問題。
 
 # Map Options 必要選項
 
