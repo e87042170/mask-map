@@ -18,7 +18,7 @@ function initMap() {
     zoom: 8
   });
   //增加地圖標記
-  var marker = new google.maps.Marker({
+  var markers = new google.maps.Marker({
     position: {lat: 22.6393936, lng: 120.3025675},
     map: map
   });
@@ -27,7 +27,23 @@ function initMap() {
 
 *marker* 的 *position* 屬性先放上高雄火車站的座標，之後我們可以再修改座標位置。
 
+> 範例：[增加地圖標記 Marker ](https://e87042170.github.io/mask-map/demo/google-maps-add-markers-01.html)
+
 重新整理網頁之後，應該就可以看到在高雄火車站上，出現了一個預設的地圖標記。接下來，就可以試著使用迴圈來產生多個地圖標記了。
+
+# 新增多個地圖標記
+
+
+
+```js
+var position = [
+  {label:'A', lat:22.6393936, lng:120.3025675},
+  {label:'B', lat:22.6393836, lng:120.3025775},
+  {label:'C', lat:22.6393736, lng:120.3025875},
+  {label:'D', lat:22.6393636, lng:120.3025975},
+  {label:'E', lat:22.6393536, lng:120.3025075}
+];
+```
 
 
 
