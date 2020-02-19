@@ -15,7 +15,7 @@ var markers;
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 22.6393936, lng: 120.3025675},
-    zoom: 8
+    zoom: 15
   });
   //增加地圖標記
   var markers = new google.maps.Marker({
