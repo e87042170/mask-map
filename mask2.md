@@ -81,3 +81,4 @@ zoom: 15
 
 我們的地圖可以正確顯示之後，接下來我們就可以嘗試看看放置地圖標記(Marker)。
 
+> 範例：[使用 Google Maps JavaScript API 載入地圖](https://e87042170.github.io/mask-map/demo/google-map-javascript-api.html)
