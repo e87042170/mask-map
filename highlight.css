@@ -274,9 +274,6 @@
     background-color: #f8f8f8
 }
 
-* {
-    box-sizing: border-box
-}
 .post-body .highlight {
     margin-bottom: 1rem
 }
@@ -284,6 +281,11 @@
 .post-body .highlight pre {
     margin-bottom: 0;
     word-break: normal
+}
+
+.post-body .highlight pre code{
+    background-color: transparent;
+    border-radius: 0;
 }
 
 .post-body .highlight pre,.post-body pre {
