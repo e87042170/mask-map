@@ -64,4 +64,4 @@
 .highlight .gd { color: #f92672; } /* Generic.Deleted & Diff Deleted */
 .highlight .gi { color: #a6e22e; } /* Generic.Inserted & Diff Inserted */
 
-.highlight pre code{background-color: transparent;border-radius: 0;color: #f8f8f2;}
+.highlight pre code{background-color: transparent;border-radius: 0;color: #f8f8f2;font-size: 100%;}
