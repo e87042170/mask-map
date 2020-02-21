@@ -1,4 +1,4 @@
-.highlight pre { background-color: #272822;font-size: 0.9rem;line-height: 1.45; }
+.highlight pre { background-color: #272822;font-size: 0.9rem;line-height: 1.25; }
 .highlight .hll { background-color: #272822; }
 .highlight .c { color: #75715e } /* Comment */
 .highlight .err { color: #960050; background-color: #1e0010 } /* Error */
@@ -64,4 +64,4 @@
 .highlight .gd { color: #f92672; } /* Generic.Deleted & Diff Deleted */
 .highlight .gi { color: #a6e22e; } /* Generic.Inserted & Diff Inserted */
 
-.highlight pre code{background-color: transparent;border-radius: 0;}
+.highlight pre code{background-color: transparent;border-radius: 0;color: #f8f8f2;}
