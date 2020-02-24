@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Marker From Dataset</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+        var map;
+        var markers;
+        var position;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 22.6393936, lng: 120.3025675},
+                zoom: 15
+            });
+            //從資料集中，增加多個地圖標記
+            $.ajax({
+                type: "GET",
+                url: "../data.csv",
+                dataType: "text",
+                success: function(csv) {
+                    position=JSON.parse(csvJSON(csv))
+                    for (var i = 0; i < position.length; i++) {
+                        var lat=parseFloat(position[i]["\"TGOS Y\"\r"])
+                        var lng=parseFloat(position[i]["\"TGOS X\""])
+                        if(lat!='null'){
+                            markers = new google.maps.Marker({
+                                position: {lat:lat, lng:lng},
+                                // label: position[i].label,
+                                map: map
+                            });
+                        }
+                    }
+                }
+            }); 
+        }
+        function csvJSON(csv){
+            var lines=csv.split("\n");
+            var result = [];
+            var headers=lines[0].split(",");
+            for(var i=1;i<lines.length;i++){
+                var obj = {};
+                var currentline=lines[i].split(",");
+                for(var j=0;j<headers.length;j++){
+                    obj[headers[j]] = currentline[j];
+                }
+                result.push(obj);
+            }
+            //return result; //JavaScript object
+            return JSON.stringify(result); //JSON
+        }
+    </script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"></script>
+  </body>
+</html>
