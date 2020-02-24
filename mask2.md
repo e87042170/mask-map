@@ -9,7 +9,7 @@ title: mask2
 
 首先，先到 Google 官網的說明裡面複製基本的範例。
 
-<pre class="prettyprint linenums"><code class="language-html">
+<pre class="prettyprint"><code class="language-html">
 <!DOCTYPE html>
 <html>
   <head>
@@ -78,3 +78,41 @@ title: mask2
 我們的地圖可以正確顯示之後，接下來我們就可以嘗試看看放置地圖標記(Marker)。
 
 > 範例：[使用 Google Maps JavaScript API 載入地圖](https://e87042170.github.io/mask-map/demo/google-map-javascript-api.html)
+
+<pre>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
+    async defer></script>
+  </body>
+</html>
+</pre>
