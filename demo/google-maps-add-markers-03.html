@@ -37,7 +37,7 @@
                 success: function(csv) {
                     position=JSON.parse(csvJSON(csv))
                     for (var i = 0; i < position.length; i++) {
-                        var lat=parseFloat(position[i]["\"TGOS Y\"\r"])
+                        var lat=parseFloat(position[i]["\"TGOS Y\""])
                         var lng=parseFloat(position[i]["\"TGOS X\""])
                         if(lat!='null'){
                             markers = new google.maps.Marker({
