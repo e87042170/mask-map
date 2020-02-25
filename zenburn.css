@@ -1,6 +1,6 @@
 .highlight code, .highlight pre {
 color:#fdce93;
-background-color:#3f3f3f;
+background-color:#333;
 }
 
 .highlight .hll {
@@ -133,4 +133,7 @@ color:#9ac39f;
 
 .highlight .nb,.highlight .nc,.highlight .nf,.highlight .bp,.highlight .vc {
 color:#efef8f;
+}
+.highlight pre>code{
+    padding: 0;
 }
