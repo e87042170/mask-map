@@ -32,13 +32,13 @@
             //從資料集中，增加多個地圖標記
             $.ajax({
                 type: "GET",
-                url: "maskdata.csv",//口罩剩餘數量的開放資料
+                url: "../maskdata.csv",//口罩剩餘數量的開放資料
                 dataType: "text",
                 success: function(csv) {
                     pharmacy=JSON.parse(csvJSON(csv))
                     $.ajax({
                         type: "GET",
-                        url: "data.csv",//包含GPS座標的資料
+                        url: "../data.csv",//包含GPS座標的資料
                         dataType: "text",
                         success: function(csv) {
                             position=JSON.parse(csvJSON(csv))
