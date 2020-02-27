@@ -23,7 +23,9 @@
     <script>
         var map;
         var markers;
+        var pharmacy;
         var position;
+        var curInfoWindow='';
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 22.6393936, lng: 120.3025675},
