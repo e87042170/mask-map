@@ -79,7 +79,7 @@ title: mask2
 
 > 範例：[使用 Google Maps JavaScript API 載入地圖](https://e87042170.github.io/mask-map/demo/google-map-javascript-api.html)
 
-<pre>
+```html
 <!DOCTYPE html>
 <html>
   <head>
@@ -115,4 +115,4 @@ title: mask2
     async defer></script>
   </body>
 </html>
-</pre>
+```
