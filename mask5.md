@@ -34,6 +34,9 @@ $.ajax({
         }); 
     }
 }); 
+```
+
+```js
 function addMarker(e,pos) {
     markers[e] = new google.maps.Marker({
         position: {
@@ -131,5 +134,5 @@ function addInfoWindow(marker, message) {
 
 目前為止，我們的地圖已經可以正確地顯示藥局及口罩剩餘數量，下一篇文章，我們要來讓地圖標記可以根據剩餘數量，自動地改變標記顏色。
 
-> 範例：[結合口罩剩餘數量資料，並加入資訊視窗](https://e87042170.github.io/mask-map/demo/google-maps-add-markers-04.html){:rel="nofollow" target="_blank"}
+> 範例：[結合口罩剩餘數量資料，加入資訊視窗](https://e87042170.github.io/mask-map/demo/google-maps-add-infowindow.html){:rel="nofollow" target="_blank"}
 
