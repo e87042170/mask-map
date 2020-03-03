@@ -59,6 +59,6 @@ function addMarker(e,pos) {
 
 > 範例：[根據口罩剩餘數量，變更地圖標記圖案](https://e87042170.github.io/mask-map/demo/google-maps-change-marker.html){:rel="nofollow" target="_blank"}
 
-做到這裡，我們的口罩地圖雛形已經完成了，但是還有一個問題，那就是 **maskdata.csv** 因為*同源政策*的關係沒有辦法直接抓，所以還沒有辦法顯示最新的資料，只能手動更新。
+做到這裡，我們的口罩地圖雛形已經完成了，但是還有一個問題，那就是 **maskdata.csv** 因為**同源政策**的關係沒有辦法直接抓，所以還沒有辦法顯示最新的資料，只能手動更新。
 
 因此，下一篇我將會分享我的解決方案。
