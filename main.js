@@ -3,6 +3,22 @@ var markers = [];
 var pharmacy = [];
 var position = [];
 var curInfoWindow='';
+var lat=22.6393936;
+var lng=120.3025675;
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition,initMap());
+  } else {
+    console.log("Geolocation is not supported by this browser.");
+    initMap();
+  }
+}
+
+function showPosition(position) {
+    lat=position.coords.latitude;
+    lng=position.coords.longitude;
+    initMap();
+}
 // Initialize and add the map
 
 function initMap() {
