@@ -3,8 +3,8 @@ var markers = [];
 var pharmacy = [];
 var position = [];
 var curInfoWindow='';
-var lat=22.6393936;
-var lng=120.3025675;
+// The location of Uluru
+var uluru = {lat: 22.6393936, lng: 120.3025675};//高雄火車站
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition,initMap());
@@ -17,13 +17,12 @@ function getLocation() {
 function showPosition(position) {
     lat=position.coords.latitude;
     lng=position.coords.longitude;
+    uluru = {lat: lat, lng: lng};
     initMap();
 }
 // Initialize and add the map
 
-function initMap() {
-    // The location of Uluru
-    var uluru = {lat: 22.6393936, lng: 120.3025675};//高雄火車站
+function initMap() {        
     // The map, centered at Uluru
     map = new google.maps.Map(
         document.getElementById('map'), {
