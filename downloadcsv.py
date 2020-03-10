@@ -1,6 +1,6 @@
+import csv
+import requests
 def download():
-    import csv
-    import requests
     CSV_URL = 'http://data.nhi.gov.tw/Datasets/Download.ashx?rid=A21030000I-D50001-001&l=https://data.nhi.gov.tw/resource/mask/maskdata.csv'
     with requests.Session() as s:
         download = s.get(CSV_URL)
