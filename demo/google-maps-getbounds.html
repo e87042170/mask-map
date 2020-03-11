@@ -138,7 +138,7 @@
 
         function getGeo(val,geojson){
             for (var i = 0; i < geojson.length; i++) {
-                if(val==geojson[i]['醫事機構代碼']&&!isNaN(geojson[i]["\"TGOS Y\""])&&!isNaN(geojson[i]["\"TGOS X\""])){
+                if(val==geojson[i]['醫事機構代碼']&&!isNaN(parseFloat(geojson[i]["\"TGOS Y\""]))&&!isNaN(parseFloat(geojson[i]["\"TGOS X\""]))){
                     return {
                         lat: parseFloat(geojson[i]["\"TGOS Y\""]),
                         lng: parseFloat(geojson[i]["\"TGOS X\""])
