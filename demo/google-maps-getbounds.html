@@ -97,18 +97,19 @@
             }); 
         }
         function addMarker(e,pos) {
-            markers[e] = new google.maps.Marker({
+            var marker = new google.maps.Marker({
                 position: {
                     lat: pos.lat,
                     lng: pos.lng
                 },
                 map: map,
             });
+            markers.push(marker);
             var msg='<h1>'+pharmacy[e]["醫事機構名稱"]+'</h1>'
                     +'<div>'+pharmacy[e]["醫事機構地址"]+'</div><br>'
                     +'<div><span class="adult">成人：'+pharmacy[e]["成人口罩剩餘數"]+'</span> '
                     +'<span class="child">兒童：'+pharmacy[e]["兒童口罩剩餘數"]+'</span></div>';
-            addInfoWindow(markers[e],msg);
+            addInfoWindow(marker,msg);
         }
         function addInfoWindow(marker, message) {
             var infoWindow = new google.maps.InfoWindow({
