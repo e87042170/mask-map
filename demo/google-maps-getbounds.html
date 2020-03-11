@@ -28,6 +28,7 @@
         var curInfoWindow='';
         var lat=22.6393936;
         var lng=120.3025675;
+        var max_radius=2000;
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition,initMap());
@@ -63,9 +64,16 @@
                         if(pos.lat>Za.i&&pos.lat<Za.j&&pos.lng>Ua.i&&pos.lng<Ua.j){
                             addMarker(i,pos);
                         }
+                        // var map_center = map.getCenter();
+                        // var marker_pos = new google.maps.LatLng(pos.lat, pos.lng);
+                        // var dist=google.maps.geometry.spherical.computeDistanceBetween(map_center, marker_pos);
+                        // if(dist<max_radius){
+                        //     addMarker(i,pos);
+                        // }
                         
                     }
                 }
+                var markerCluster = new MarkerClusterer(map, markers,{imagePath:'https://googlemaps.github.io/v3-utility-library/packages/markerclustererplus/images/m'});
             });
             //從資料集中，增加多個地圖標記
             $.ajax({
@@ -83,17 +91,21 @@
                             for (var i = 0; i < pharmacy.length; i++) {
                                 var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
                                 if(pos.lat!='null'){
-                                    var dist=google.maps.geometry.spherical.computeDistanceBetween({lat:lat,lng:lng}, pos);
-                                    if(dist>1500){
+                                    var map_center = new google.maps.LatLng(lat, lng);
+                                    var marker_pos = new google.maps.LatLng(pos.lat, pos.lng);
+                                    var dist=google.maps.geometry.spherical.computeDistanceBetween(map_center, marker_pos);
+                                    if(dist<max_radius){
                                         addMarker(i,pos);
                                     }
                                     
                                 }
                             }
+                            var markerCluster = new MarkerClusterer(map, markers,{imagePath:'https://googlemaps.github.io/v3-utility-library/packages/markerclustererplus/images/m'});
                         }
                     }); 
                 }
             }); 
+            
         }
         function addMarker(e,pos) {
             var marker = new google.maps.Marker({
@@ -138,9 +150,10 @@
 
         function getGeo(val,geojson){
             for (var i = 0; i < geojson.length; i++) {
-                if(val==geojson[i]['醫事機構代碼']&&!isNaN(parseFloat(geojson[i]["\"TGOS Y\""]))&&!isNaN(parseFloat(geojson[i]["\"TGOS X\""]))){
+                if(val==geojson[i]['醫事機構代碼']&&!isNaN(parseFloat(geojson[i]["\"TGOS Y\"\r"]))&&!isNaN(parseFloat(geojson[i]["\"TGOS X\""]))){
                     return {
-                        lat: parseFloat(geojson[i]["\"TGOS Y\""]),
+                        //lat: parseFloat(geojson[i]["\"TGOS Y\""]),  //本地端測試不適用
+                        lat: parseFloat(geojson[i]["\"TGOS Y\"\r"]),  //本地端測試適用 \r
                         lng: parseFloat(geojson[i]["\"TGOS X\""])
                     };
                 }
@@ -164,6 +177,7 @@
         }
     </script>
     <script src="../js/jquery.min.js"></script>
+    <script src="https://googlemaps.github.io/v3-utility-library/packages/markerclustererplus/dist/markerclustererplus.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&callback=getLocation"></script>
   </body>
 </html>
