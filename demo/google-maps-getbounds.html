@@ -52,7 +52,7 @@
             });
             google.maps.event.addListener(map, 'tilesloaded', function() {
                 console.log("Bounds = "+map.getBounds());
-                var bounds=map.getbounds();
+                var bounds=map.getBounds();
                 var sw=bounds(0);
                 var ne=bounds(1);
                 for (var i = 0; i < pharmacy.length; i++) {
