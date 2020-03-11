@@ -55,7 +55,9 @@
                 var bounds=map.getBounds();
                 var Za=bounds.Za;
                 var Ua=bounds.Ua;
-                clearMarkers();
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
+                }
                 markers=[];
                 for (var i = 0; i < pharmacy.length; i++) {
                     var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
@@ -120,9 +122,9 @@
             });
         }
         // Sets the map on all markers in the array.
-        function setMapOnAll(map) {
+        function setMapOnAll(map1) {
             for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
+                markers[i].setMap(map1);
             }
         }
 
