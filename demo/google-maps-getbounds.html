@@ -55,6 +55,7 @@
                 var bounds=map.getBounds();
                 var Za=bounds.Za;
                 var Ua=bounds.Ua;
+                markers=[];
                 for (var i = 0; i < pharmacy.length; i++) {
                     var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
                     if(pos.lat!='null'){
