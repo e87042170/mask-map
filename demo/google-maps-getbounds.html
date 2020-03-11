@@ -52,12 +52,18 @@
             });
             google.maps.event.addListener(map, 'tilesloaded', function() {
                 console.log("Bounds = "+map.getBounds());
-                // for (var i = 0; i < pharmacy.length; i++) {
-                //     var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
-                //     if(pos.lat!='null'){
-                //         addMarker(i,pos);
-                //     }
-                // }
+                var bounds=map.getbounds();
+                var sw=bounds(0);
+                var ne=bounds(1);
+                for (var i = 0; i < pharmacy.length; i++) {
+                    var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
+                    if(pos.lat!='null'){
+                        if(pos.lat>sw(0)&&pos.lat<ne(0)&&pos.lng>sw(1)&&pos.lng<ne(1)){
+                            addMarker(i,pos);
+                        }
+                        
+                    }
+                }
             });
             //從資料集中，增加多個地圖標記
             $.ajax({
@@ -72,12 +78,12 @@
                         dataType: "text",
                         success: function(csv) {
                             position=JSON.parse(csvJSON(csv))
-                            for (var i = 0; i < pharmacy.length; i++) {
-                                var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
-                                if(pos.lat!='null'){
-                                    addMarker(i,pos);
-                                }
-                            }
+                            // for (var i = 0; i < pharmacy.length; i++) {
+                            //     var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
+                            //     if(pos.lat!='null'){
+                            //         addMarker(i,pos);
+                            //     }
+                            // }
                         }
                     }); 
                 }
