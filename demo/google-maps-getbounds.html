@@ -55,6 +55,7 @@
                 var bounds=map.getBounds();
                 var Za=bounds.Za;
                 var Ua=bounds.Ua;
+                clearMarkers();
                 markers=[];
                 for (var i = 0; i < pharmacy.length; i++) {
                     var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
@@ -118,6 +119,18 @@
                 infoWindow.open(map, marker);
             });
         }
+        // Sets the map on all markers in the array.
+        function setMapOnAll(map) {
+            for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+            }
+        }
+
+        // Removes the markers from the map, but keeps them in the array.
+        function clearMarkers() {
+            setMapOnAll(null);
+        }
+
         function getGeo(val,geojson){
             for (var i = 0; i < geojson.length; i++) {
                 if(val==geojson[i]['醫事機構代碼']){
