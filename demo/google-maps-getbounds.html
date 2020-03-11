@@ -53,12 +53,12 @@
             google.maps.event.addListener(map, 'tilesloaded', function() {
                 console.log("Bounds = "+map.getBounds());
                 var bounds=map.getBounds();
-                var sw=bounds(0);
-                var ne=bounds(1);
+                var sw=bounds[0];
+                var ne=bounds[1];
                 for (var i = 0; i < pharmacy.length; i++) {
                     var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
                     if(pos.lat!='null'){
-                        if(pos.lat>sw(0)&&pos.lat<ne(0)&&pos.lng>sw(1)&&pos.lng<ne(1)){
+                        if(pos.lat>sw[0]&&pos.lat<ne[0]&&pos.lng>sw[1]&&pos.lng<ne[1]){
                             addMarker(i,pos);
                         }
                         
