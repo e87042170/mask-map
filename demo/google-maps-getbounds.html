@@ -50,7 +50,7 @@
                 center: {lat: lat, lng: lng},
                 zoom: 15
             });
-            google.maps.event.addListener(map, 'tilesloaded', function() {
+            google.maps.event.addListener(map, 'dragend', function() {
                 console.log("Bounds = "+map.getBounds());
                 var bounds=map.getBounds();
                 var Za=bounds.Za;
@@ -80,12 +80,12 @@
                         dataType: "text",
                         success: function(csv) {
                             position=JSON.parse(csvJSON(csv))
-                            // for (var i = 0; i < pharmacy.length; i++) {
-                            //     var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
-                            //     if(pos.lat!='null'){
-                            //         addMarker(i,pos);
-                            //     }
-                            // }
+                            if(pos.lat!='null'){
+                                if(pos.lat>Za.i&&pos.lat<Za.j&&pos.lng>Ua.i&&pos.lng<Ua.j){
+                                    addMarker(i,pos);
+                                }
+                                
+                            }
                         }
                     }); 
                 }
