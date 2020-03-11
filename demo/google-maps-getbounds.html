@@ -55,10 +55,8 @@
                 var bounds=map.getBounds();
                 var Za=bounds.Za;
                 var Ua=bounds.Ua;
-                for (var i = 0; i < markers.length; i++) {
-                    markers[i].setMap(null);
-                }
-                markers=[];
+                // clearMarkers();
+                // markers=[];
                 for (var i = 0; i < pharmacy.length; i++) {
                     var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
                     if(pos.lat!='null'){
@@ -68,6 +66,11 @@
                         
                     }
                 }
+            });
+            google.maps.event.addListener(map, 'dragend', function() {
+                console.log("clearMarkers");
+                clearMarkers();
+                markers=[];
             });
             //從資料集中，增加多個地圖標記
             $.ajax({
@@ -122,9 +125,9 @@
             });
         }
         // Sets the map on all markers in the array.
-        function setMapOnAll(map1) {
+        function setMapOnAll(map) {
             for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(map1);
+                markers[i].setMap(map);
             }
         }
 
