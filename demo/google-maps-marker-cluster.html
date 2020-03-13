@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>getBounds</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+        var map;
+        var markers = [];
+        var pharmacy = [];
+        var position = [];
+        var curInfoWindow='';
+        var lat=22.6393936;
+        var lng=120.3025675;
+        var max_radius=2000;
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition,initMap());
+            } else {
+                //x.innerHTML = "Geolocation is not supported by this browser.";
+                console.log("Geolocation is not supported by this browser.");
+                initMap();
+            }
+        }
+
+        function showPosition(position) {
+            // x.innerHTML = "Latitude: " + position.coords.latitude +
+            // "<br>Longitude: " + position.coords.longitude;
+            lat=position.coords.latitude;
+            lng=position.coords.longitude;
+            initMap();
+        }
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: lat, lng: lng},
+                zoom: 15
+            });
+            google.maps.event.addListener(map, 'dragend', function() {
+                console.log("Bounds = "+map.getBounds());
+                var bounds=map.getBounds();
+                var Za=bounds.Za;
+                var Ua=bounds.Ua;
+                clearMarkers();
+                markers=[];
+                for (var i = 0; i < pharmacy.length; i++) {
+                    var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
+                    if(pos.lat!='null'){
+                        if(pos.lat>Za.i&&pos.lat<Za.j&&pos.lng>Ua.i&&pos.lng<Ua.j){
+                            addMarker(i,pos);
+                        }
+                        // var map_center = map.getCenter();
+                        // var marker_pos = new google.maps.LatLng(pos.lat, pos.lng);
+                        // var dist=google.maps.geometry.spherical.computeDistanceBetween(map_center, marker_pos);
+                        // if(dist<max_radius){
+                        //     addMarker(i,pos);
+                        // }
+                        
+                    }
+                }
+                var markerCluster = new MarkerClusterer(map, markers,{imagePath:'https://googlemaps.github.io/v3-utility-library/packages/markerclustererplus/images/m'});
+            });
+            //從資料集中，增加多個地圖標記
+            $.ajax({
+                type: "GET",
+                url: "../maskdata.csv",//口罩剩餘數量的開放資料
+                dataType: "text",
+                success: function(csv) {
+                    pharmacy=JSON.parse(csvJSON(csv))
+                    $.ajax({
+                        type: "GET",
+                        url: "../data.csv",//包含GPS座標的資料
+                        dataType: "text",
+                        success: function(csv) {
+                            position=JSON.parse(csvJSON(csv))
+                            for (var i = 0; i < pharmacy.length; i++) {
+                                var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
+                                if(pos.lat!='null'){
+                                    var map_center = new google.maps.LatLng(lat, lng);
+                                    var marker_pos = new google.maps.LatLng(pos.lat, pos.lng);
+                                    var dist=google.maps.geometry.spherical.computeDistanceBetween(map_center, marker_pos);
+                                    if(dist<max_radius){
+                                        addMarker(i,pos);
+                                    }
+                                    
+                                }
+                            }
+                            var markerCluster = new MarkerClusterer(map, markers,{imagePath:'https://googlemaps.github.io/v3-utility-library/packages/markerclustererplus/images/m'});
+                        }
+                    }); 
+                }
+            }); 
+            
+        }
+        function addMarker(e,pos) {
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: pos.lat,
+                    lng: pos.lng
+                },
+                map: map,
+            });
+            markers.push(marker);
+            var msg='<h1>'+pharmacy[e]["醫事機構名稱"]+'</h1>'
+                    +'<div>'+pharmacy[e]["醫事機構地址"]+'</div><br>'
+                    +'<div><span class="adult">成人：'+pharmacy[e]["成人口罩剩餘數"]+'</span> '
+                    +'<span class="child">兒童：'+pharmacy[e]["兒童口罩剩餘數"]+'</span></div>';
+            addInfoWindow(marker,msg);
+        }
+        function addInfoWindow(marker, message) {
+            var infoWindow = new google.maps.InfoWindow({
+                content: message
+            });
+            google.maps.event.addListener(marker, 'click', function () {
+                //如果目前有已開啟的資訊視窗，就把它關閉
+                if(curInfoWindow!=''){
+                    curInfoWindow.close();
+                    curInfoWindow=''
+                }  
+                curInfoWindow=infoWindow;
+                infoWindow.open(map, marker);
+            });
+        }
+        // Sets the map on all markers in the array.
+        function setMapOnAll(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+
+        // Removes the markers from the map, but keeps them in the array.
+        function clearMarkers() {
+            setMapOnAll(null);
+        }
+
+        function getGeo(val,geojson){
+            for (var i = 0; i < geojson.length; i++) {
+                if(val==geojson[i]['醫事機構代碼']&&!isNaN(parseFloat(geojson[i]["\"TGOS Y\"\r"]))&&!isNaN(parseFloat(geojson[i]["\"TGOS X\""]))){
+                    return {
+                        //lat: parseFloat(geojson[i]["\"TGOS Y\""]),  //本地端測試不適用
+                        lat: parseFloat(geojson[i]["\"TGOS Y\"\r"]),  //本地端測試適用 \r
+                        lng: parseFloat(geojson[i]["\"TGOS X\""])
+                    };
+                }
+            }
+            return {lat: 'null',lng: 'null'};
+        }
+        function csvJSON(csv){
+            var lines=csv.split("\n");
+            var result = [];
+            var headers=lines[0].split(",");
+            for(var i=1;i<lines.length;i++){
+                var obj = {};
+                var currentline=lines[i].split(",");
+                for(var j=0;j<headers.length;j++){
+                    obj[headers[j]] = currentline[j];
+                }
+                result.push(obj);
+            }
+            //return result; //JavaScript object
+            return JSON.stringify(result); //JSON
+        }
+    </script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="https://googlemaps.github.io/v3-utility-library/packages/markerclustererplus/dist/markerclustererplus.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&callback=getLocation"></script>
+  </body>
+</html>
