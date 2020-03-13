@@ -28,7 +28,7 @@
         var curInfoWindow='';
         var lat=22.6393936;
         var lng=120.3025675;
-        var max_radius=2000;
+        var max_radius=2000;    //半徑(公尺)
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition,initMap());
@@ -51,29 +51,22 @@
                 center: {lat: lat, lng: lng},
                 zoom: 15
             });
-            google.maps.event.addListener(map, 'dragend', function() {
+            //在平移或縮放之後開始變的有空閒的時候
+            google.maps.event.addListener(map, 'idle', function() {
                 console.log("Bounds = "+map.getBounds());
                 var bounds=map.getBounds();
-                var Za=bounds.Za;
-                var Ua=bounds.Ua;
+                var sw=bounds.getSouthWest();
+                var ne=bounds.getNorthEast();
                 clearMarkers();
                 markers=[];
                 for (var i = 0; i < pharmacy.length; i++) {
                     var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
                     if(pos.lat!='null'){
-                        if(pos.lat>Za.i&&pos.lat<Za.j&&pos.lng>Ua.i&&pos.lng<Ua.j){
+                        if(pos.lat>sw.lat()&&pos.lat<ne.lat()&&pos.lng>sw.lng()&&pos.lng<ne.lng()){
                             addMarker(i,pos);
                         }
-                        // var map_center = map.getCenter();
-                        // var marker_pos = new google.maps.LatLng(pos.lat, pos.lng);
-                        // var dist=google.maps.geometry.spherical.computeDistanceBetween(map_center, marker_pos);
-                        // if(dist<max_radius){
-                        //     addMarker(i,pos);
-                        // }
-                        
                     }
                 }
-                var markerCluster = new MarkerClusterer(map, markers,{imagePath:'https://googlemaps.github.io/v3-utility-library/packages/markerclustererplus/images/m'});
             });
             //從資料集中，增加多個地圖標記
             $.ajax({
@@ -88,19 +81,17 @@
                         dataType: "text",
                         success: function(csv) {
                             position=JSON.parse(csvJSON(csv))
+                            var bounds=map.getBounds();
+                            var sw=bounds.getSouthWest();
+                            var ne=bounds.getNorthEast();
                             for (var i = 0; i < pharmacy.length; i++) {
                                 var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
                                 if(pos.lat!='null'){
-                                    var map_center = new google.maps.LatLng(lat, lng);
-                                    var marker_pos = new google.maps.LatLng(pos.lat, pos.lng);
-                                    var dist=google.maps.geometry.spherical.computeDistanceBetween(map_center, marker_pos);
-                                    if(dist<max_radius){
+                                    if(pos.lat>sw.lat()&&pos.lat<ne.lat()&&pos.lng>sw.lng()&&pos.lng<ne.lng()){
                                         addMarker(i,pos);
                                     }
-                                    
                                 }
                             }
-                            var markerCluster = new MarkerClusterer(map, markers,{imagePath:'https://googlemaps.github.io/v3-utility-library/packages/markerclustererplus/images/m'});
                         }
                     }); 
                 }
