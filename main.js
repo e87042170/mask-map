@@ -5,6 +5,7 @@ var position = [];
 var curInfoWindow='';
 // The location of Uluru
 var uluru = {lat: 22.6393936, lng: 120.3025675};//高雄火車站
+var max_radius=1800;    //半徑(公尺)
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition,initMap());
@@ -42,7 +43,22 @@ function initMap() {
             //   }
             // ]		  
           });
-
+    google.maps.event.addListener(map, 'idle', function() {
+      //console.log("Bounds = "+map.getBounds());
+      clearMarkers();
+      markers=[];
+      for (var i = 0; i < pharmacy.length; i++) {
+        var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
+        if(pos.lat!='null'){
+            var map_center = new google.maps.LatLng(map.getCenter().lat(), map.getCenter().lng());
+            var marker_pos = new google.maps.LatLng(pos.lat, pos.lng);
+            var dist=google.maps.geometry.spherical.computeDistanceBetween(map_center, marker_pos);
+            if(dist<max_radius){
+                addMarker(i,pos);
+            }
+        }
+      }
+    });
     $.ajax({
       type: "GET",
       url: "maskdata.csv",
@@ -61,12 +77,17 @@ function initMap() {
           success: function(csv) {
             position=JSON.parse(csvJSON(csv))
             for (var i = 0; i < pharmacy.length; i++) {
-                var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
-                if(pos.lat!='null'){
-                  addMarker(i,pos);
-                }
+              var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
+              if(pos.lat!='null'){
+                  var map_center = new google.maps.LatLng(lat, lng);
+                  var marker_pos = new google.maps.LatLng(pos.lat, pos.lng);
+                  var dist=google.maps.geometry.spherical.computeDistanceBetween(map_center, marker_pos);
+                  if(dist<max_radius){
+                      addMarker(i,pos);
+                  }
+              }
             }
-            // var markerCluster = new MarkerClusterer(map, markers,{imagePath:'https://googlemaps.github.io/v3-utility-library/packages/markerclustererplus/images/m'});
+            //var markerCluster = new MarkerClusterer(map, markers,{imagePath:'https://googlemaps.github.io/v3-utility-library/packages/markerclustererplus/images/m'});
           }
         }); 
       }
@@ -87,7 +108,7 @@ function initMap() {
         // origin: new google.maps.Point(0,0), // origin
         // anchor: new google.maps.Point(0, 0) // anchor
     };
-    markers[e] = new google.maps.Marker({
+    var marker = new google.maps.Marker({
       position: {
         lat: pos.lat,
         lng: pos.lng
@@ -96,11 +117,12 @@ function initMap() {
       icon:icon
     //   label: position[e].label
     });
+    markers.push(marker);
     var msg='<h1>'+pharmacy[e]["醫事機構名稱"]+'</h1>'
             +'<div>'+pharmacy[e]["醫事機構地址"]+'</div><br>'
             +'<div><span class="adult">成人：'+pharmacy[e]["成人口罩剩餘數"]+'</span> '
             +'<span class="child">兒童：'+pharmacy[e]["兒童口罩剩餘數"]+'</span></div>';
-    addInfoWindow(markers[e],msg);
+    addInfoWindow(marker,msg);
   }
   function addInfoWindow(marker, message) {
     var infoWindow = new google.maps.InfoWindow({
@@ -115,20 +137,29 @@ function initMap() {
       curInfoWindow=infoWindow;
     });
   }
+  // Sets the map on all markers in the array.
+  function setMapOnAll(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }
+  }
+
+  // Removes the markers from the map, but keeps them in the array.
+  function clearMarkers() {
+      setMapOnAll(null);
+  }
   function getGeo(val,geojson){
     for (var i = 0; i < geojson.length; i++) {
-      if(val==geojson[i]['醫事機構代碼']){
-        return {
-          lat: parseFloat(geojson[i]["\"TGOS Y\""]),
-          lng: parseFloat(geojson[i]["\"TGOS X\""])
-        };
-      }
+        if(val==geojson[i]['醫事機構代碼']&&!isNaN(parseFloat(geojson[i]["\"TGOS Y\""]))&&!isNaN(parseFloat(geojson[i]["\"TGOS X\""]))){
+            return {
+                lat: parseFloat(geojson[i]["\"TGOS Y\""]),  //本地端測試不適用
+                //lat: parseFloat(geojson[i]["\"TGOS Y\"\r"]),  //本地端測試適用 \r
+                lng: parseFloat(geojson[i]["\"TGOS X\""])
+            };
+        }
     }
-    return {
-      lat: 'null',
-      lng: 'null'
-    };
-  }
+    return {lat: 'null',lng: 'null'};
+}
   function csvJSON(csv){
     var lines=csv.split("\n");
     var result = [];
