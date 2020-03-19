@@ -51,17 +51,17 @@
                 center: {lat: lat, lng: lng},
                 zoom: 15
             });
-            google.maps.event.addListener(map, 'dragend', function() {
-                console.log("Bounds = "+map.getBounds());
-                var bounds=map.getBounds();
-                var Za=bounds.Za;
-                var Ua=bounds.Ua;
+            google.maps.event.addListener(map, 'idle', function() {
+                // console.log("Bounds = "+map.getBounds());
                 clearMarkers();
                 markers=[];
                 for (var i = 0; i < pharmacy.length; i++) {
                     var pos=getGeo(pharmacy[i]['醫事機構代碼'],position);
                     if(pos.lat!='null'){
-                        if(pos.lat>Za.i&&pos.lat<Za.j&&pos.lng>Ua.i&&pos.lng<Ua.j){
+                        var map_center = new google.maps.LatLng(map.getCenter().lat(), map.getCenter().lng());
+                        var marker_pos = new google.maps.LatLng(pos.lat, pos.lng);
+                        var dist=google.maps.geometry.spherical.computeDistanceBetween(map_center, marker_pos);
+                        if(dist<max_radius){
                             addMarker(i,pos);
                         }
                     }
