@@ -51,7 +51,7 @@
                 center: {lat: lat, lng: lng},
                 zoom: 15
             });
-            //在平移或縮放之後開始變的有空閒的時候
+            //idle=在平移或縮放之後開始變的有空閒的時候
             google.maps.event.addListener(map, 'idle', function() {
                 console.log("Bounds = "+map.getBounds());
                 var bounds=map.getBounds();
